@@ -1,0 +1,885 @@
+/* =========================
+   БАЗА
+========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #ffffff;
+    color: #171717;
+}
+
+
+/* =========================
+   ВЕРХНЕЕ МЕНЮ
+========================= */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    padding: 18px 0 14px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    backdrop-filter: blur(10px);
+}
+
+
+/* Заголовок меню */
+
+header::before {
+    content: "CHECHIL PUB";
+
+    display: block;
+
+    text-align: center;
+
+    font-size: 25px;
+    font-weight: 500;
+    letter-spacing: -0.8px;
+
+    margin-bottom: 22px;
+}
+
+
+/* =========================
+   КАТЕГОРИИ
+========================= */
+
+.categories {
+    display: flex;
+
+    gap: 10px;
+
+    overflow-x: auto;
+
+    padding: 0 18px;
+
+    scrollbar-width: none;
+}
+
+.categories::-webkit-scrollbar {
+    display: none;
+}
+
+.categories a {
+    flex-shrink: 0;
+
+    text-decoration: none;
+
+    color: #202020;
+
+    background: transparent;
+
+    padding: 11px 18px;
+
+    border-radius: 30px;
+
+    font-size: 15px;
+    font-weight: 400;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
+}
+
+
+/* Первая категория активная */
+
+.categories a:first-child {
+    background: #9699a2;
+    color: white;
+}
+
+
+/* Кнопка «БАР» всегда жёлтая */
+
+.categories a[href="#bar"] {
+    background: #f2a900;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.categories a[href="#bar"]:hover {
+    background: #e09b00;
+}
+
+
+/* При нажатии */
+
+.categories a:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================
+   СЕКЦИИ
+========================= */
+
+section {
+    padding: 20px 18px 35px;
+}
+
+section h2 {
+    margin: 0 0 25px;
+
+    font-size: 21px;
+    line-height: 1.25;
+
+    font-weight: 500;
+
+    letter-spacing: -0.4px;
+}
+
+
+/* =========================
+   СЕТКА БЛЮД
+========================= */
+
+.menu-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 22px;
+    row-gap: 45px;
+}
+
+
+/* =========================
+   БЛЮДО
+========================= */
+
+.card {
+    min-width: 0;
+
+    cursor: pointer;
+
+    margin: 0;
+}
+
+
+/* =========================
+   ФОТО БЛЮДА
+========================= */
+
+.card img {
+    display: block;
+
+    width: 100%;
+
+    height: 155px;
+
+    object-fit: contain;
+
+    border-radius: 0;
+
+    transition: transform 0.2s ease;
+}
+
+
+/* Небольшая реакция при нажатии */
+
+.card:active img {
+    transform: scale(0.96);
+}
+
+
+/* =========================
+   НАЗВАНИЕ
+========================= */
+
+.card h3 {
+    margin: 13px 0 0;
+    min-height: 44px;
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    color: #171717;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================
+   КНОПКА ЦЕНЫ
+========================= */
+
+.card .price {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    min-height: 46px;
+
+    margin: 13px 0 0;
+
+    padding: 0 10px;
+
+    border-radius: 28px;
+
+    background: #f2a900;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    line-height: 1;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    transition: 0.2s ease;
+}
+
+
+/* Эффект нажатия */
+
+.card:active .price {
+    transform: scale(0.97);
+}
+
+
+/* =========================
+   МОДАЛЬНОЕ ОКНО
+========================= */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 15px;
+
+    background: rgba(0, 0, 0, 0.62);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+}
+
+
+/* Содержимое */
+
+.modal-content {
+    position: relative;
+
+    width: 100%;
+    max-width: 450px;
+
+    max-height: 90vh;
+
+    padding: 16px 20px 20px;
+
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    overflow-y: auto;
+
+    animation: show 0.2s ease;
+}
+
+
+/* =========================
+   КАРТИНКА В МОДАЛКЕ
+========================= */
+
+.modal img {
+    display: block;
+
+    width: 100%;
+
+    max-width: 380px;
+
+    max-height: 380px;
+
+    object-fit: contain;
+
+    margin: 0 auto 18px;
+
+    border-radius: 12px;
+}
+
+
+/* =========================
+   ЗАКРЫТИЕ (ЛИПКОЕ)
+========================= */
+
+.close {
+    position: sticky;
+
+    top: 0;
+    float: right;
+
+    z-index: 10;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    color: #222;
+
+    cursor: pointer;
+
+    background: #ffffff;
+    padding: 0 4px;
+    border-radius: 50%;
+}
+
+.close:hover {
+    opacity: 0.6;
+}
+
+
+/* =========================
+   ТЕКСТ МОДАЛКИ
+========================= */
+
+#modal-title {
+    margin: 0 0 12px;
+
+    font-size: 24px;
+
+    line-height: 1.2;
+
+    font-weight: 700;
+
+    color: #222;
+}
+
+#modal-description {
+    margin: 0 0 12px;
+
+    font-size: 16px;
+
+    line-height: 1.45;
+
+    color: #333;
+}
+
+
+/* Вес + цена */
+
+.modal-content .price-container,
+.modal-content .price {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 15px;
+}
+
+#modal-weight {
+    font-size: 15px;
+
+    line-height: 1.4;
+
+    color: #777;
+}
+
+#modal-price {
+    font-size: 20px;
+
+    line-height: 1.3;
+
+    font-weight: 700;
+
+    color: #f2a900;
+}
+
+
+/* =========================
+   ДОБАВИТЬ В КОРЗИНУ
+========================= */
+
+#add-to-cart {
+    width: 100%;
+
+    min-height: 50px;
+
+    margin-top: 20px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #f2a900;
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   КОРЗИНА (КОМПАКТНАЯ)
+========================= */
+
+#cart-button {
+    position: fixed;
+
+    right: 18px;
+    bottom: 20px;
+
+    z-index: 10000;
+
+    min-height: 52px;
+
+    padding: 14px 20px;
+
+    border: none;
+
+    border-radius: 30px;
+
+    background: #f2a900;
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.22);
+}
+
+
+/* Заголовок */
+
+#cart-content h2 {
+    margin: -10px 0 12px;
+
+    font-size: 22px;
+}
+
+
+/* Товар */
+
+.cart-item {
+    padding: 10px 0;
+
+    border-bottom: 1px solid #eee;
+}
+
+
+/* Информация */
+
+.cart-item-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+    margin-bottom: 6px;
+}
+
+.cart-item-info strong {
+    font-size: 15px;
+
+    line-height: 1.25;
+}
+
+.cart-item-info span {
+    color: #777;
+
+    font-size: 13px;
+}
+
+
+/* Количество */
+
+.cart-controls {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.cart-controls button {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f0f0f0;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+.cart-controls span {
+    min-width: 18px;
+
+    text-align: center;
+
+    font-weight: 700;
+    font-size: 14px;
+}
+
+
+/* Сумма позиции */
+
+.cart-item-total {
+    margin-top: 6px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   ИТОГ КОРЗИНЫ
+========================= */
+
+.cart-summary {
+    margin-top: 14px;
+}
+
+.cart-summary > div {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.cart-grand-total {
+    margin-top: 10px;
+
+    padding-top: 10px;
+
+    border-top: 2px solid #222;
+
+    font-size: 19px;
+}
+
+
+/* =========================
+   АНИМАЦИЯ
+========================= */
+
+@keyframes show {
+    from {
+        transform: scale(0.94);
+
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+
+        opacity: 1;
+    }
+}
+
+
+/* =========================
+   ОБНОВЛЕННЫЙ БАР (АККОРДЕОН + СЧЕТЧИК)
+========================= */
+
+.bar-category {
+    margin-bottom: 12px;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+}
+
+/* Шапка категории (заголовок) */
+.bar-category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 18px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #171717;
+    background: #f9f9f9;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.bar-category-header::-webkit-details-marker {
+    display: none;
+}
+
+/* Поворот стрелки при открытии */
+.bar-category-header .chevron {
+    font-size: 12px;
+    transition: transform 0.2s ease;
+    color: #777;
+}
+
+.bar-category[open] .bar-category-header .chevron {
+    transform: rotate(180deg);
+}
+
+/* Список товаров внутри категории */
+.bar-category-list {
+    padding: 8px 18px 14px;
+}
+
+/* Элемент товара */
+.bar-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.bar-item:last-child {
+    border-bottom: none;
+}
+
+.bar-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bar-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #171717;
+}
+
+.bar-item-details {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bar-item-details .volume {
+    font-size: 13px;
+    color: #888;
+}
+
+.bar-item-details .price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #f2a900;
+}
+
+/* Кнопки плюс/минус (+1-) */
+.bar-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f5f5f5;
+    padding: 4px 8px;
+    border-radius: 20px;
+}
+
+.bar-controls button {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #171717;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: active 0.1s ease;
+}
+
+.bar-controls button:active {
+    transform: scale(0.92);
+}
+
+.bar-count {
+    min-width: 18px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #171717;
+}
+
+
+/* =========================
+   МОБИЛЬНЫЕ
+========================= */
+
+@media (max-width: 600px) {
+
+    header {
+        padding-top: 16px;
+    }
+
+    header::before {
+        font-size: 24px;
+
+        margin-bottom: 19px;
+    }
+
+    .categories {
+        gap: 8px;
+
+        padding: 0 18px;
+    }
+
+    .categories a {
+        padding: 10px 17px;
+
+        font-size: 15px;
+    }
+
+    section {
+        padding: 18px 18px 35px;
+    }
+
+    section h2 {
+        font-size: 21px;
+
+        margin-bottom: 22px;
+    }
+
+    .menu-grid {
+        column-gap: 18px;
+
+        row-gap: 42px;
+    }
+
+    .card img {
+        height: 145px;
+    }
+
+    .card h3 {
+        font-size: 16px;
+
+        min-height: 41px;
+
+        margin-top: 11px;
+    }
+
+    .card .price {
+        min-height: 44px;
+
+        margin-top: 11px;
+
+        font-size: 15px;
+    }
+
+    /* Модалка */
+
+    .modal {
+        padding: 12px;
+    }
+
+    .modal-content {
+        max-height: 92vh;
+
+        padding: 16px 18px 18px;
+
+        border-radius: 18px;
+    }
+
+    .modal img {
+        max-height: 320px;
+
+        margin-bottom: 15px;
+    }
+
+    #modal-title {
+        font-size: 22px;
+    }
+
+    #modal-description {
+        font-size: 15px;
+    }
+
+    #modal-price {
+        font-size: 21px;
+    }
+}
+
+
+/* =========================
+   ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ
+========================= */
+
+@media (max-width: 380px) {
+
+    header::before {
+        font-size: 22px;
+    }
+
+    section {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .categories {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .menu-grid {
+        column-gap: 14px;
+
+        row-gap: 38px;
+    }
+
+    .card img {
+        height: 130px;
+    }
+
+    .card h3 {
+        font-size: 15px;
+
+        min-height: 38px;
+    }
+
+    .card .price {
+        min-height: 42px;
+
+        font-size: 14px;
+    }
+}

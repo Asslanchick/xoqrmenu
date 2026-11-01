@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#100d0a">
+
+    <title>X.O. NIGHTBAR — Меню</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    
+<style>
+    :root {
+        --gold: #e9ad45;
+        --gold-light: #ffd27b;
+        --background: #100d0a;
+        --text: #f8f5ef;
+        --muted: #aaa39a;
+        --border: rgba(255, 255, 255, 0.16);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+    }
+
+    body {
+        min-height: 100vh;
+        font-family: "Manrope", sans-serif;
+        color: var(--text);
+        background-color: var(--background);
+        position: relative;
+        isolation: isolate;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background:
+            linear-gradient(
+                rgba(10, 8, 7, 0.72),
+                rgba(10, 8, 7, 0.86)
+            ),
+            url("images/402.jpg");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        pointer-events: none;
+    }
+
+    button {
+        font: inherit;
+    }
+
+    /* ЛОГОТИП */
+
+    .top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 16px 10px;
+        background: transparent;
+        mix-blend-mode: screen;
+    }
+
+    .club-logo {
+        display: block;
+        width: min(180px, 55%);
+        max-height: 90px;
+        object-fit: contain;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    .gold-line {
+        width: 35px;
+        height: 2px;
+        margin-top: 10px;
+        background: var(--gold);
+        border-radius: 2px;
+    }
+
+    /* НАВИГАЦИЯ */
+
+    .navigation {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        gap: 8px;
+        padding: 10px 12px;
+        background: transparent;
+    }
+
+    .nav-button {
+        flex: 1;
+        min-width: 0;
+        min-height: 44px;
+        padding: 11px 8px;
+        color: #d4cec5;
+        background: rgba(7, 9, 10, 0.35);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition:
+            background 0.2s,
+            color 0.2s,
+            border-color 0.2s,
+            transform 0.1s;
+    }
+
+    .nav-button:active {
+        transform: scale(0.97);
+    }
+
+    .nav-button.active {
+        color: #1a1207;
+        background: var(--gold);
+        border-color: var(--gold-light);
+        box-shadow: 0 3px 12px rgba(233, 173, 69, 0.35);
+    }
+
+    /* ОСНОВНОЙ КОНТЕНТ */
+
+    main {
+        width: 100%;
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 12px 12px 35px;
+    }
+
+    .menu-section {
+        display: none;
+        animation: appear 0.25s ease;
+    }
+
+    .menu-section.active {
+        display: block;
+    }
+
+    @keyframes appear {
+        from {
+            opacity: 0;
+            transform: translateY(4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .section-heading {
+        margin: 8px 0 16px;
+    }
+
+    .section-heading h1 {
+        font-size: 28px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* КАТЕГОРИИ */
+
+    .category {
+        margin-top: 18px;
+    }
+
+    .category-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        color: var(--gold-light);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+    }
+
+    .category-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: rgba(233, 173, 69, 0.25);
+    }
+
+    /* КАРТОЧКИ ТОВАРОВ (Вариант А) */
+
+    .product {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-height: 105px;
+        margin-bottom: 12px;
+        padding: 10px 14px;
+        background: rgba(7, 9, 10, 0.38);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    /* ИЗОБРАЖЕНИЕ */
+
+    .product-image {
+        flex-shrink: 0;
+        width: 120px;
+        height: 85px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* ТЕКСТОВЫЙ БЛОК (Занимает пространство между картинкой и ценой) */
+
+    .product-info {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .product-name {
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.35;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+    }
+
+    .product-description {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.3;
+    }
+
+    .product-volume {
+        margin-top: 4px;
+        color: #aaa39a;
+        font-size: 11px;
+    }
+
+    /* ЦЕНА СПРАВА ПО ЦЕНТРУ КАРТОЧКИ */
+
+    .product-price {
+        flex-shrink: 0;
+        margin-left: auto;
+        padding-left: 10px;
+        color: var(--gold);
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: -0.2px;
+        white-space: nowrap;
+        text-align: right;
+    }
+
+    .price-unit {
+        font-size: 12px;
+        margin-left: 1px;
+    }
+
+    /* ПОДВАЛ */
+
+    footer {
+        padding: 20px 15px 28px;
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .age {
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .footer-text {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    /* МАЛЕНЬКИЕ ЭКРАНЫ */
+
+    @media (max-width: 380px) {
+
+        .nav-button {
+            font-size: 10px;
+            padding: 10px 4px;
+            border-radius: 10px;
+        }
+
+        .product {
+            gap: 9px;
+            min-height: 88px;
+            padding: 8px;
+            border-radius: 14px;
+        }
+
+        .product-image {
+            width: 95px;
+            height: 70px;
+            border-radius: 10px;
+        }
+
+        .product-name {
+            font-size: 12px;
+        }
+
+        .product-price {
+            font-size: 13px;
+        }
+
+        .product-description,
+        .product-volume {
+            font-size: 10px;
+        }
+    }
+
+    /* БОЛЬШИЕ ЭКРАНЫ */
+
+    @media (min-width: 600px) {
+
+        main {
+            padding-right: 16px;
+            padding-left: 16px;
+        }
+
+        .product {
+            min-height: 115px;
+        }
+
+        .product-image {
+            width: 130px;
+            height: 90px;
+        }
+
+        .product-name {
+            font-size: 14px;
+        }
+    }
+
+</style>
+
+</head>
+
+<body>
+
+    <!-- ЛОГОТИП -->
+    <header class="top">
+        <img
+            class="club-logo"
+            src="images/xologo.png"
+            alt="X.O. NIGHTBAR"
+        >
+        <div class="gold-line"></div>
+    </header>
+
+    <!-- НАВИГАЦИЯ -->
+    <nav class="navigation" aria-label="Разделы меню">
+        <button
+            class="nav-button active"
+            type="button"
+            data-section="bar"
+            aria-selected="true"
+        >
+            Бар
+        </button>
+
+        <button
+            class="nav-button"
+            type="button"
+            data-section="kitchen"
+            aria-selected="false"
+        >
+            Кухня
+        </button>
+
+        <button
+            class="nav-button"
+            type="button"
+            data-section="combos"
+            aria-selected="false"
+        >
+            Комбо-наборы
+        </button>
+    </nav>
+
+    <main>
+
+        <!-- ================= БАР ================= -->
+
+<section class="menu-section active" id="bar">
+
+    <div class="section-heading">
+        <h1>Бар</h1>
+    </div>
+
+    <!-- НАПИТКИ -->
+    <div class="category">
+        <h2 class="category-title">Напитки</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/piko.jpg" alt="Соки в ассортименте" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Соки в ассортименте</h3>
+                <div class="product-volume">1 л</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/bonaqua.png" alt="Bonaqua" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Bonaqua</h3>
+                <div class="product-volume">0,5 л</div>
+            </div>
+            <div class="product-price">800 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/cocacola.jpg" alt="Coca-Cola" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Coca-Cola</h3>
+                <div class="product-volume">0,25 л</div>
+            </div>
+            <div class="product-price">1 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/schweppes.webp" alt="Schweppes" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Schweppes</h3>
+                <div class="product-volume">0,25 л</div>
+            </div>
+            <div class="product-price">1 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/borjomi.png" alt="Borjomi" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Borjomi</h3>
+                <div class="product-volume">0,5 л</div>
+            </div>
+            <div class="product-price">1 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/redbull.jpg" alt="Red Bull" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Red Bull</h3>
+                <div class="product-volume">0,25 л</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ПИВО -->
+    <div class="category">
+        <h2 class="category-title">Пиво</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/miller.jpg" alt="Miller" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Miller</h3>
+                <div class="product-volume">0,33 л</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/heineken.png" alt="Heineken" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Heineken</h3>
+                <div class="product-volume">0,33 л</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/kron.jpg" alt="1664 Blanc" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">1664 Blanc</h3>
+                <div class="product-volume">0,46 л</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/corona.png" alt="Corona Extra" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Corona Extra</h3>
+                <div class="product-volume">0,33 л</div>
+            </div>
+            <div class="product-price">3 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/bud.jpg" alt="Bud U.S.A." loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Bud U.S.A.</h3>
+                <div class="product-volume">0,33 л</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ЗАКУСКИ К ПИВУ -->
+    <div class="category">
+        <h2 class="category-title">Закуски к пиву</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/chips.jpg" alt="Чипсы" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Чипсы</h3>
+            </div>
+            <div class="product-price">1 200 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/chechil.png" alt="Чечил" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Чечил</h3>
+            </div>
+            <div class="product-price">1 300 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/arahis.jpg" alt="Арахис" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Арахис</h3>
+            </div>
+            <div class="product-price">1 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/pistachios.jpg" alt="Фисташки" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Фисташки</h3>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ТЕКИЛА -->
+    <div class="category">
+        <h2 class="category-title">Текила</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/olmecasilver.png" alt="Olmeca Blanco" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Olmeca Blanco</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/olmecagold.jpg" alt="Olmeca Gold" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Olmeca Gold</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/agavita.png" alt="Agavita Blanco" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Agavita Blanco</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/agavitagold.jpg" alt="Agavita Gold" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Agavita Gold</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- КОНЬЯК / БРЕНДИ -->
+    <div class="category">
+        <h2 class="category-title">Коньяк / Бренди</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/hennessy.png" alt="Hennessy" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Hennessy</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/ararat.jpg" alt="Ararat 5" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Ararat 5</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/ararat.jpg" alt="Ararat 3" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Ararat 3</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 200 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/kazakhstan.png" alt="Kazakhstan" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Kazakhstan</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ВИСКИ -->
+    <div class="category">
+        <h2 class="category-title">Виски</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/jimbeam.png" alt="Jim Beam" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Jim Beam</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/ballantines.jpg" alt="Ballantines" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Ballantines</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/jackdaniels.jpg" alt="Jack Daniel's" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Jack Daniel's</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">3 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/jameson.jpg" alt="Jameson Original" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Jameson Original</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">3 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/redlabel.png" alt="Red Label" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Red Label</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/macallan.png" alt="The Macallan 12Y.O." loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">The Macallan 12Y.O.</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">6 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/chivas.jpg" alt="Chivas Regal 12Y.O." loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Chivas Regal 12Y.O.</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">3 600 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ВОДКА -->
+    <div class="category">
+        <h2 class="category-title">Водка</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/kabarga.jpg" alt="Кабарга" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Кабарга</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/bulbash.png" alt="Бульбаш" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Бульбаш</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 100 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/tchaikovsky.png" alt="Tchaikovsky" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Tchaikovsky</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 400 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/nemiroff.png" alt="Nemiroff Delikat" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Nemiroff Delikat</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/stoli.jpg" alt="Stolichnaya" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Stolichnaya</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/abs.jpg" alt="Absolut" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Absolut</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ИГРИСТОЕ ВИНО -->
+    <div class="category">
+        <h2 class="category-title">Игристое вино</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/lambb.jpg" alt="Lambrusco" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Lambrusco</h3>
+                <div class="product-volume">0,75 л</div>
+            </div>
+            <div class="product-price">10 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/martini_logo.webp" alt="Martini Asti" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Martini Asti</h3>
+                <div class="product-volume">0,75 л</div>
+            </div>
+            <div class="product-price">15 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/martini_logo.webp" alt="Martini Prosecco" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Martini Prosecco</h3>
+                <div class="product-volume">0,75 л</div>
+            </div>
+            <div class="product-price">15 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- РОМ -->
+    <div class="category">
+        <h2 class="category-title">Ром</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/spiced.jpg" alt="Bacardi Spiced" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Bacardi Spiced</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/bianco.jpg" alt="Bacardi Carta Blanca" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Bacardi Carta Blanca</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/negra.jpg" alt="Bacardi Carta Negra" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Bacardi Carta Negra</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/oakheart.jpg" alt="Bacardi Oakheart" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Bacardi Oakheart</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ДЖИН -->
+    <div class="category">
+        <h2 class="category-title">Джин</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/beefeater.webp" alt="Beefeater" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Beefeater</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/broker.jpg" alt="Broker's" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Broker's</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 800 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ШОТЫ / ЛИКЕР / НАСТОЙКА -->
+    <div class="category">
+        <h2 class="category-title">Шоты / Ликер / Настойка</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/b52.jpg" alt="B52" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">B52</h3>
+                <div class="product-volume">Порция</div>
+            </div>
+            <div class="product-price">1 800 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/shots.jpg" alt="Мини Шоты" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Мини Шоты</h3>
+                <div class="product-volume">Порция</div>
+            </div>
+            <div class="product-price">1 800 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/sambuca.jpg" alt="Sambuca" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Sambuca</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 200 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/baileys.jpg" alt="Baileys" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Baileys</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">6 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/jager.jpg" alt="Jagermeister" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Jagermeister</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 300 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/absinthe.png" alt="Absinthe" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Absinthe</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">2 500 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ВЕРМУТ -->
+    <div class="category">
+        <h2 class="category-title">Вермут</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/vermouth.png" alt="Martini Fiero" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Martini Fiero</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 800 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/vermouth.png" alt="Martini Bianco" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Martini Bianco</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 800 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/vermouth.png" alt="Martini Rosso" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Martini Rosso</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 800 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/vermouth.png" alt="Martini Extra Dry" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Martini Extra Dry</h3>
+                <div class="product-volume">50 мл</div>
+            </div>
+            <div class="product-price">1 800 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- MIX DRINK -->
+    <div class="category">
+        <h2 class="category-title">Mix Drink</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/mix.png" alt="Brandy & Coca Cola" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Brandy & Coca Cola</h3>
+            </div>
+            <div class="product-price">1 800 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/mix.png" alt="Otvertka" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Otvertka</h3>
+            </div>
+            <div class="product-price">1 800 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/mix.png" alt="Whiskey & Coca Cola" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Whiskey & Coca Cola</h3>
+            </div>
+            <div class="product-price">2 300 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/mix.png" alt="Vodka & Red Bull" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Vodka & Red Bull</h3>
+            </div>
+            <div class="product-price">3 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+</section>
+
+        <!-- ================= КУХНЯ ================= -->
+
+<section class="menu-section" id="kitchen">
+
+    <div class="section-heading">
+        <h1>Кухня</h1>
+    </div>
+
+    <!-- ЗАКУСКИ -->
+    <div class="category">
+        <h2 class="category-title">Закуски</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/garlik.jpg" alt="Чесночные гренки" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Чесночные гренки</h3>
+            </div>
+            <div class="product-price">1 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/nuggets.jpeg" alt="Наггетсы" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Наггетсы</h3>
+            </div>
+            <div class="product-price">2 200 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/fries.jpg" alt="Фри" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Фри</h3>
+            </div>
+            <div class="product-price">1 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/dolki.png" alt="Картофельные дольки" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Картофельные дольки</h3>
+            </div>
+            <div class="product-price">1 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/shrimps.png" alt="Креветки к пиву" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Креветки к пиву</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/chebureki.jpg" alt="Мини чебуреки" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Мини чебуреки</h3>
+            </div>
+            <div class="product-price">2 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/noimage.jpg" alt="Фруктовое ассорти" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Фруктовое ассорти</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/fruits.jpg" alt="Фруктовое ассорти" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Большое фруктовое ассорти</h3>
+            </div>
+            <div class="product-price">5 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/fish.jpg" alt="Рыбное ассорти" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Рыбное ассорти</h3>
+            </div>
+            <div class="product-price">7 000 <span class="price-unit">₸</span></div>
+        </article>
+
+    <!-- САЛАТЫ -->
+    <div class="category">
+        <h2 class="category-title">Салаты</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/baklajan.jpg" alt="Салат с баклажанами" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Салат с баклажанами</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/orig.webp" alt="Салат цезарь" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Салат цезарь</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/solenya.jpg" alt="Разносолы" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Разносолы</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/grek.webp" alt="Греческий салат" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Греческий салат</h3>
+            </div>
+            <div class="product-price">3 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/seld.png" alt="Русский салат" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Русский салат</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/sezar.jpg" alt="Нисуаз" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Нисуаз</h3>
+            </div>
+            <div class="product-price">3 000 <span class="price-unit">₸</span></div>
+        </article>
+
+    <!-- ПИЦЦЫ -->
+    <div class="category">
+        <h2 class="category-title">Пиццы</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/margo.webp" alt="Маргарита" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Маргарита</h3>
+            </div>
+            <div class="product-price">3 200 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/4seasons.webp" alt="4 сезона" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">4 сезона</h3>
+            </div>
+            <div class="product-price">4 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/bolognese2.jpg" alt="Болоньезе" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Болоньезе</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/pepperoni.webp" alt="Пепперони" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Пепперони</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/4sira.png" alt="4 сыра" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">4 сыра</h3>
+            </div>
+            <div class="product-price">4 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/mushroom.jpg" alt="С грибами" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">С грибами</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/chicken.jpg" alt="С курицей" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">С курицей</h3>
+            </div>
+            <div class="product-price">4 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ПАСТА -->
+    <div class="category">
+        <h2 class="category-title">Паста</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/fetuchini.jpg" alt="Фетучини с курицей" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Фетучини с курицей</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/bolognese.webp" alt="Болоньезе" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Болоньезе</h3>
+            </div>
+            <div class="product-price">3 500 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+    <!-- ПИВНЫЕ СЕТЫ -->
+    <div class="category">
+        <h2 class="category-title">Пивные сеты</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/noimage.jpg" alt="Пивной сет №1" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Номер 1: пивной сет</h3>
+            </div>
+            <div class="product-price">3 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/pivnoyset.jpg" alt="Пивной сет №2" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Номер 2: пивной сет</h3>
+            </div>
+            <div class="product-price">4 500 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+</section>
+
+        <!-- ================= КОМБО-НАБОРЫ ================= -->
+
+<section class="menu-section" id="combos">
+
+    <div class="section-heading">
+        <h1>Комбо-наборы</h1>
+    </div>
+
+    <div class="category">
+        <h2 class="category-title">Для компании / Наборы с алкоголем</h2>
+
+        <article class="product">
+            <img class="product-image" src="images/combo1.jpg" alt="Кабарга + русская закуска" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Кабарга + русская закуска</h3>
+                <div class="product-description">Водка Кабарга + закуска</div>
+            </div>
+            <div class="product-price">11 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/combo2.jpg" alt="Tchaikovsky + разносолы" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Tchaikovsky + разносолы</h3>
+                <div class="product-description">Водка Tchaikovsky + разносолы</div>
+            </div>
+            <div class="product-price">16 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/combo1.jpg" alt="Stolichnaya + пицца на выбор + ассорти" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Stolichnaya + пицца + ассорти</h3>
+                <div class="product-description">Водка Stolichnaya + пицца на выбор + ассорти</div>
+            </div>
+            <div class="product-price">16 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/combo2.jpg" alt="Absolut + рыбное ассорти" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Absolut + рыбное ассорти</h3>
+                <div class="product-description">Водка Absolut + рыбное ассорти</div>
+            </div>
+            <div class="product-price">25 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/combo1.jpg" alt="Lambrusco + фруктовое ассорти" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Lambrusco + фруктовое ассорти</h3>
+                <div class="product-description">Игристое вино + фрукты</div>
+            </div>
+            <div class="product-price">12 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/combo2.jpg" alt="Jameson + фруктовое ассорти" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Jameson + фруктовое ассорти</h3>
+                <div class="product-description">Виски Jameson + фрукты</div>
+            </div>
+            <div class="product-price">30 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/combo1.jpg" alt="Red Label + фруктовое ассорти" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Red Label + фруктовое ассорти</h3>
+                <div class="product-description">Виски Red Label + фрукты</div>
+            </div>
+            <div class="product-price">24 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/combo2.jpg" alt="Party Mix Кабарга + 6 Red Bull" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Party Mix: Кабарга + 6 Red Bull</h3>
+            </div>
+            <div class="product-price">18 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/combo1.jpg" alt="Party Mix Jagermeister + 6 Red Bull" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Party Mix: Jagermeister + 6 Red Bull</h3>
+            </div>
+            <div class="product-price">25 000 <span class="price-unit">₸</span></div>
+        </article>
+
+        <article class="product">
+            <img class="product-image" src="images/combo2.jpg" alt="Party Mix Mclain + 6 Red Bull" loading="lazy">
+            <div class="product-info">
+                <h3 class="product-name">Party Mix: Mclain + 6 Red Bull</h3>
+            </div>
+            <div class="product-price">20 000 <span class="price-unit">₸</span></div>
+        </article>
+    </div>
+
+</section>
+
+    </main>
+
+    <footer>
+        <div class="age">21+</div>
+        <p class="footer-text">
+            Цены указаны в тенге.<br>
+            Уточняйте наличие позиций у персонала.
+        </p>
+    </footer>
+
+    <script>
+        const navButtons = document.querySelectorAll(".nav-button");
+        const sections = document.querySelectorAll(".menu-section");
+
+        navButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                const targetId = button.dataset.section;
+
+                navButtons.forEach(item => {
+                    item.classList.remove("active");
+                    item.setAttribute("aria-selected", "false");
+                });
+
+                button.classList.add("active");
+                button.setAttribute("aria-selected", "true");
+
+                sections.forEach(section => {
+                    section.classList.toggle(
+                        "active",
+                        section.id === targetId
+                    );
+                });
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
