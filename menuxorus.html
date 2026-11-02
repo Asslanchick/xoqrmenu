@@ -11,8 +11,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    
-
 <style>
 :root {
     --gold: #d9a84e;
@@ -218,8 +216,6 @@ main {
     text-transform: uppercase;
 }
 
-/* ЛИНИЯ ТОЛЬКО МЕЖДУ КАТЕГОРИЯМИ */
-
 .category-title::after {
     content: "";
     flex: 1;
@@ -233,7 +229,7 @@ main {
 }
 
 /* ==================================
-   КУХНЯ — ПРЕЖНИЕ БОЛЬШИЕ КАРТОЧКИ
+   КУХНЯ — БОЛЬШИЕ КАРТОЧКИ
 ================================== */
 
 .product {
@@ -319,10 +315,8 @@ main {
 }
 
 /* ==================================
-   БАР — КОМПАКТНЫЙ ТЕКСТОВЫЙ ФОРМАТ
+   БАР — КОМПАКТНЫЙ ФОРМАТ
 ================================== */
-
-/* Присвоить этот класс барной секции */
 
 .bar-section .category {
     margin-top: 27px;
@@ -333,8 +327,6 @@ main {
     font-size: 15px;
     letter-spacing: 1.3px;
 }
-
-/* Убираем карточку */
 
 .bar-section .product {
     display: flex;
@@ -355,8 +347,6 @@ main {
     box-shadow: none;
 }
 
-/* Маленькая фотография */
-
 .bar-section .product-image {
     flex-shrink: 0;
 
@@ -369,8 +359,6 @@ main {
     border-radius: 6px;
     background: transparent;
 }
-
-/* Название и объём */
 
 .bar-section .product-info {
     flex: 1;
@@ -396,8 +384,6 @@ main {
     font-weight: 500;
 }
 
-/* Цена справа */
-
 .bar-section .product-price {
     flex-shrink: 0;
 
@@ -410,8 +396,6 @@ main {
 
     white-space: nowrap;
 }
-
-/* Без разделителей между напитками */
 
 .bar-section .product + .product {
     border-top: none;
@@ -442,14 +426,11 @@ footer {
 /* МАЛЕНЬКИЕ ЭКРАНЫ */
 
 @media (max-width: 380px) {
-
     .nav-button {
         font-size: 10px;
         padding: 10px 4px;
         border-radius: 10px;
     }
-
-    /* Кухня */
 
     .product {
         gap: 9px;
@@ -477,8 +458,6 @@ footer {
         font-size: 10px;
     }
 
-    /* Бар */
-
     .bar-section .product {
         gap: 9px;
         padding: 7px 1px;
@@ -505,7 +484,6 @@ footer {
 /* БОЛЬШИЕ ЭКРАНЫ */
 
 @media (min-width: 600px) {
-
     main {
         padding-right: 16px;
         padding-left: 16px;
@@ -530,8 +508,6 @@ footer {
     }
 }
 </style>
-
-
 </head>
 
 <body>
@@ -579,71 +555,68 @@ footer {
     <main>
 
         <!-- ================= БАР ================= -->
-
-<section class="menu-section bar-section" id="bar">
-
-    <div class="section-heading">
-        <h1>Бар</h1>
-    </div>
-
-    <!-- НАПИТКИ -->
-    <div class="category">
-        <h2 class="category-title">Напитки</h2>
-
-        <article class="product">
-            <img class="product-image" src="images/piko.jpg" alt="Соки в ассортименте" loading="lazy">
-            <div class="product-info">
-                <h3 class="product-name">Соки в ассортименте</h3>
-                <div class="product-volume">1 л</div>
+        <section class="menu-section bar-section active" id="bar">
+            <div class="section-heading">
+                <h1>Бар</h1>
             </div>
-            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
-        </article>
 
-        <article class="product">
-            <img class="product-image" src="images/bonaqua.png" alt="Bonaqua" loading="lazy">
-            <div class="product-info">
-                <h3 class="product-name">Bonaqua</h3>
-                <div class="product-volume">0,5 л</div>
-            </div>
-            <div class="product-price">800 <span class="price-unit">₸</span></div>
-        </article>
+            <div class="category">
+                <h2 class="category-title">Напитки</h2>
 
-        <article class="product">
-            <img class="product-image" src="images/cocacola.jpg" alt="Coca-Cola" loading="lazy">
-            <div class="product-info">
-                <h3 class="product-name">Coca-Cola</h3>
-                <div class="product-volume">0,25 л</div>
-            </div>
-            <div class="product-price">1 000 <span class="price-unit">₸</span></div>
-        </article>
+                <article class="product">
+                    <img class="product-image" src="images/piko.jpg" alt="Соки в ассортименте" loading="lazy">
+                    <div class="product-info">
+                        <h3 class="product-name">Соки в ассортименте</h3>
+                        <div class="product-volume">1 л</div>
+                    </div>
+                    <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+                </article>
 
-        <article class="product">
-            <img class="product-image" src="images/schweppes.webp" alt="Schweppes" loading="lazy">
-            <div class="product-info">
-                <h3 class="product-name">Schweppes</h3>
-                <div class="product-volume">0,25 л</div>
-            </div>
-            <div class="product-price">1 500 <span class="price-unit">₸</span></div>
-        </article>
+                <article class="product">
+                    <img class="product-image" src="images/bonaqua.png" alt="Bonaqua" loading="lazy">
+                    <div class="product-info">
+                        <h3 class="product-name">Bonaqua</h3>
+                        <div class="product-volume">0,5 л</div>
+                    </div>
+                    <div class="product-price">800 <span class="price-unit">₸</span></div>
+                </article>
 
-        <article class="product">
-            <img class="product-image" src="images/borjomi.png" alt="Borjomi" loading="lazy">
-            <div class="product-info">
-                <h3 class="product-name">Borjomi</h3>
-                <div class="product-volume">0,5 л</div>
-            </div>
-            <div class="product-price">1 500 <span class="price-unit">₸</span></div>
-        </article>
+                <article class="product">
+                    <img class="product-image" src="images/cocacola.jpg" alt="Coca-Cola" loading="lazy">
+                    <div class="product-info">
+                        <h3 class="product-name">Coca-Cola</h3>
+                        <div class="product-volume">0,25 л</div>
+                    </div>
+                    <div class="product-price">1 000 <span class="price-unit">₸</span></div>
+                </article>
 
-        <article class="product">
-            <img class="product-image" src="images/redbull.jpg" alt="Red Bull" loading="lazy">
-            <div class="product-info">
-                <h3 class="product-name">Red Bull</h3>
-                <div class="product-volume">0,25 л</div>
+                <article class="product">
+                    <img class="product-image" src="images/schweppes.webp" alt="Schweppes" loading="lazy">
+                    <div class="product-info">
+                        <h3 class="product-name">Schweppes</h3>
+                        <div class="product-volume">0,25 л</div>
+                    </div>
+                    <div class="product-price">1 500 <span class="price-unit">₸</span></div>
+                </article>
+
+                <article class="product">
+                    <img class="product-image" src="images/borjomi.png" alt="Borjomi" loading="lazy">
+                    <div class="product-info">
+                        <h3 class="product-name">Borjomi</h3>
+                        <div class="product-volume">0,5 л</div>
+                    </div>
+                    <div class="product-price">1 500 <span class="price-unit">₸</span></div>
+                </article>
+
+                <article class="product">
+                    <img class="product-image" src="images/redbull.jpg" alt="Red Bull" loading="lazy">
+                    <div class="product-info">
+                        <h3 class="product-name">Red Bull</h3>
+                        <div class="product-volume">0,25 л</div>
+                    </div>
+                    <div class="product-price">2 000 <span class="price-unit">₸</span></div>
+                </article>
             </div>
-            <div class="product-price">2 000 <span class="price-unit">₸</span></div>
-        </article>
-    </div>
 
     <!-- ПИВО -->
     <div class="category">
