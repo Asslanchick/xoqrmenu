@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X.O.</title>
+
+    <style>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        -webkit-text-size-adjust: 100%;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+        width: 100%;
+        min-height: 100vh;
+        min-height: 100dvh;
+        background-color: #111;
+        color: #ffffff;
+        overflow-x: hidden;
+    }
+
+    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ */
+    .bg-wrapper {
+        background:
+            linear-gradient(
+                rgba(0, 0, 0, 0.5),
+                rgba(0, 0, 0, 0.85)
+            ),
+            url('images/401.jpg') center / cover no-repeat;
+
+        min-height: 100vh;
+        min-height: 100dvh;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* ОСНОВНОЙ КОНТЕЙНЕР */
+    .page {
+        width: 100%;
+        max-width: 520px;
+        min-height: 100vh;
+        min-height: 100dvh;
+
+        padding: 30px 20px 20px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* ЛОГОТИП */
+    .logo {
+        width: 320px;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+        display: block;
+        margin-bottom: 20px;
+        mix-blend-mode: screen;
+    }
+
+    /* ЯЗЫКИ */
+    .languages {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 30px;
+    }
+
+    .lang-btn {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+
+        width: 44px;
+        height: 32px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+
+        transition: all 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .lang-btn.active,
+    .lang-btn:active {
+        background: #ffffff;
+        color: #000000;
+        border-color: #ffffff;
+    }
+
+    /* КОНТАКТЫ */
+    .contacts {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        width: 100%;
+        margin-top: auto; 
+        margin-bottom: 30px;
+    }
+
+    .contact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        min-width: 0;
+    }
+
+    .contact-icon-wrapper {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .contact-icon-wrapper img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+    }
+
+    .contact-text,
+    .contact-text a {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+
+    .contact-text span {
+        display: block;
+        font-size: 10px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* КНОПКА МЕНЮ */
+    .menu-btn-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .menu-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        width: 100%;
+        max-width: 320px;
+        height: 52px;
+
+        background: transparent;
+        border: 1.5px solid #ffffff;
+        border-radius: 30px;
+
+        color: #ffffff;
+        text-decoration: none;
+
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+
+        transition: all 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .menu-button:active {
+        transform: scale(0.97);
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* ИНФОРМАЦИОННЫЙ БЛОК */
+    .info-block {
+        display: flex;
+        width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding-top: 16px;
+        align-items: flex-start;
+        margin-bottom: 10px;
+    }
+
+    .info-col {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        padding: 0 8px;
+        position: relative;
+    }
+
+    .info-col:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 2px;
+        bottom: 2px;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .info-text {
+        font-size: 10px;
+        line-height: 1.3;
+        color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* МАЛЕНЬКИЕ ЭКРАНЫ */
+    @media (max-width: 360px) {
+        .contact-text,
+        .contact-text a {
+            font-size: 11px;
+        }
+        .contact-icon-wrapper {
+            width: 42px;
+            height: 42px;
+        }
+        .contact-icon-wrapper img {
+            width: 20px;
+            height: 20px;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="bg-wrapper">
+        <div class="page">
+
+            <!-- ЛОГОТИП -->
+            <img
+                class="logo"
+                src="images/xologo.png"
+                alt="XO NIGHTBAR"
+            >
+
+            <!-- ЯЗЫКИ -->
+            <div class="languages">
+                <a href="index.html" class="lang-btn">RU</a>
+                <a href="indexkz.html" class="lang-btn active">KZ</a>
+                <a href="indexen.html" class="lang-btn">EN</a>
+            </div>
+
+            <!-- КОНТАКТЫ -->
+            <div class="contacts">
+
+                <!-- ВРЕМЯ РАБОТЫ -->
+                <div class="contact">
+                    <div class="contact-icon-wrapper">
+                        <img src="images/clock.png" alt="Уақыты">
+                    </div>
+
+                    <div class="contact-text">
+                        Уақыты
+                        <span>23:00–06:00</span>
+                    </div>
+                </div>
+
+                <!-- ТЕЛЕФОН -->
+                <div class="contact">
+                    <div class="contact-icon-wrapper">
+                        <img src="images/phone.png" alt="Телефон">
+                    </div>
+
+                    <div class="contact-text">
+                        <a href="tel:+77052624946">
+                            Телефон
+                            <span>+77052624946</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- INSTAGRAM -->
+                <div class="contact">
+                    <div class="contact-icon-wrapper">
+                        <img src="images/instagram.png" alt="Instagram">
+                    </div>
+
+                    <div class="contact-text">
+                        <a
+                            href="https://www.instagram.com/nightbar.xo"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Instagram
+                            <span>@nightbar.xo</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- WHATSAPP -->
+                <div class="contact">
+                    <div class="contact-icon-wrapper">
+                        <img src="images/whatsapp.png" alt="WhatsApp">
+                    </div>
+
+                    <div class="contact-text">
+                        <a
+                            href="https://wa.me/77052624946"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            WhatsApp
+                            <span>Жазу</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- КНОПКА ПЕРЕХОДА В МЕНЮ -->
+            <div class="menu-btn-container">
+                <a class="menu-button" href="menuxokz.html">
+                    МЕНЮГЕ ӨТУ &rarr;
+                </a>
+            </div>
+
+            <!-- ИНФОРМАЦИЯ ВНИЗУ -->
+            <div class="info-block">
+
+                <div class="info-col">
+                    <div class="info-text">
+                        Тағамға аллергияңыз бар-жоғы туралы официантқа алдын ала ескертуіңізді сұраймыз
+                    </div>
+                </div>
+
+                <div class="info-col">
+                    <div class="info-text">
+                        Тағамдардың суреттері тек танысу мақсатында берілген және түпнұсқадан өзгеше болуы мүмкін
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
